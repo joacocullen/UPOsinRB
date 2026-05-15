@@ -1,0 +1,12 @@
+name: uposinrb
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - matplotlib
+  - pip
+  - pip:
+      - git+https://github.com/PatricioClark/spooky.git

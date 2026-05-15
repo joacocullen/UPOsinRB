@@ -1,0 +1,36 @@
+T:        null
+Tconst:   20.0
+sx:       null
+
+input_dir:   ../data/invariant_solutions/ST
+start_idx:   0
+output_dir:  output
+newton_dir:  reports
+gmres_dir:   reports/gmres
+apply_A_dir: reports/apply_A
+hookstep_dir:    reports/hookstep
+trust_region_dir: reports/trust_region
+save_outputs: all
+save_balance: none
+
+N_newt:      50
+tol_newt:    1.0e-8
+tol_improve: 1.0e-3
+tol_nudge:   1.0e-3
+frac_nudge:  0.0
+restart_iN:  0
+
+N_gmres:     100
+tol_gmres:   1.0e-3
+eps0:        1.0e-6
+
+N_hook:      50
+c:           0.5
+reduc_reg:   0.5
+mu0:         1.0e-6
+mu_inc:      1.5
+
+sp1:         false
+sp2:         false
+sp_dU:       false
+arclength:   false
