@@ -13,7 +13,7 @@ from types import SimpleNamespace
 
 import spooky as sp
 from spooky.solvers import SPECTER
-from spooky.methods import DynSys
+from spooky.methods import DynSys, UPONewtonSolver
 
 
 def load_config(path):
@@ -44,7 +44,7 @@ def main():
                      ftypes=['vx', 'vz', 'th'],
                      precision='double')
 
-    newt = DynSys(pm_newton, solver)
+    dynsys = DynSys(solver)
 
     if pm_newton.restart_iN == 0:
         fields = solver.load_fields(pm_newton.input_dir, pm_newton.start_idx)
@@ -55,9 +55,9 @@ def main():
         restart_path = os.path.join(pm_newton.output_dir,
                                     f'iN{pm_newton.restart_iN:02}')
         fields = solver.load_fields(restart_path, 0)
-        T, sx = newt.get_restart_values(pm_newton.restart_iN)
+        T, sx = dynsys.get_restart_values(pm_newton.restart_iN)
 
-    U = newt.flatten(fields)
+    U = dynsys.flatten(fields)
     if sx is not None:
         X = np.append(U, [T, sx])
     elif T is not None:
@@ -66,6 +66,7 @@ def main():
         X = U  # steady state with fixed Tconst
 
     print('Running Newton-Krylov-Hookstep solver...')
+    newt = UPONewtonSolver(solver, T=pm_newton.T, sx=pm_newton.sx,)
     newt.run_newton(X)
     print('Done.')
 
